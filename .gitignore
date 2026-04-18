@@ -1,0 +1,17 @@
+.env
+.env.*
+!example.env
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+*.egg-info/
+.venv/
+venv/
+.idea/
+.vscode/
+.DS_Store
+trading_log.txt
