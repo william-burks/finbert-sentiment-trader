@@ -20,33 +20,43 @@ news → FinBERT (positive/negative/neutral + prob) → threshold check → Alpa
 ## Results
 
 Two configurations were run against the same in-sample window and benchmark.
-Numbers below are pulled from the contemporaneous backtest report
-(`pre-Alpha 1.0.0` vs `pre-Alpha 1.0.1`) and are reproduced verbatim for
-honesty — including the failures.
+Numbers below are pulled from the contemporaneous backtest reports
+(QuantStats tearsheet for v1, A/B comparison report for v1 vs v2) and are
+reproduced verbatim for honesty — including the failures.
 
 - **Instrument:** SPY (daily bars, Alpaca)
 - **In-sample window:** 2020-01-01 → 2023-12-31
 - **Benchmark:** SPY buy-and-hold over the same window
 
-| Metric              | pre-Alpha 1.0.0 (v1) | pre-Alpha 1.0.1 (v2) | Benchmark |
-|---------------------|----------------------|----------------------|-----------|
-| Cumulative Return   | 34.82%               | 2,124.68%            | 56.05%    |
-| CAGR                | 7.77%                | 117.41%              | 11.78%    |
-| Sharpe Ratio        | 0.19                 | 1.06                 | 0.03      |
-| Max Drawdown        | -14.15%              | -94.16%              | -33.68%   |
-| Volatility (annual) | 6.93%                | 115.51%              | 20.53%    |
+| Metric              | pre-Alpha 1.0.0 (v1) | pre-Alpha 1.0.1 (v2) | Benchmark (SPY) |
+|---------------------|----------------------|----------------------|-----------------|
+| Cumulative Return   | 34.82%               | 2,124.68%            | 56.05%          |
+| CAGR                | 7.77%                | 117.41%              | 11.78%          |
+| Sharpe Ratio        | 0.19                 | 1.06                 | 0.30            |
+| Max Drawdown        | -14.15%              | -94.16%              | -33.68%         |
+| Volatility (annual) | 6.93%                | 115.51%              | 20.53%          |
+| Recovery Factor     | 2.46                 | —                    | 1.66            |
+| Time in Market      | ~51%                 | —                    | 100%            |
+| 2022 EOY Return     | -0.21%               | —                    | -18.16%         |
 
-**How to read this.** v2's Sharpe and cumulative return look impressive in
-isolation, but the -94.16% max drawdown means the strategy effectively blew
-up mid-run and clawed back. A ~115% annualized volatility on an equity
-strategy is a sizing failure, not a signal edge — the Sharpe improvement
-over v1 is almost entirely a compounding artifact from running leveraged
-aggressive position sizing over a rising benchmark. v1 under-trades
-(Sharpe 0.19, vol 6.93% vs a 20.53% benchmark); v2 over-trades to the point
-of ruin. Neither is a deployable system.
+**How to read this.** v1 is a *conservative under-trader*: lower volatility
+than the benchmark (6.93% vs 20.53%), shallower drawdown (-14.15% vs
+-33.68%), and better recovery factor (2.46 vs 1.66) — but leaves return on
+the table (Sharpe 0.19 vs 0.30, CAGR 7.77% vs 11.78%). The one genuinely
+interesting datapoint is 2022: v1 returned -0.21% against SPY's -18.16%,
+suggesting the sentiment filter was risk-off when it mattered. That's
+suggestive, not dispositive — a single down year on one instrument is
+anecdote, not edge.
+
+v2 looks like a different animal on paper — Sharpe 1.06, 2,125% cumulative
+return — but the -94.16% max drawdown and 115.51% annualized volatility
+mean the strategy effectively blew up mid-run and clawed back through
+leverage on a rising benchmark. Triple-digit volatility on an equity
+strategy is a sizing failure, not a signal edge. Neither version is
+deployable.
 
 Trade count, turnover, and profit factor were not captured in the original
-report — a gap flagged in the post-mortem below and addressed in
+reports — a gap flagged in the post-mortem below and addressed in
 QuantWorkstation's IS/OOS evidence harness.
 
 ## What went wrong
