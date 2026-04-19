@@ -3,7 +3,7 @@
 A 2024 experiment that traded SPY based on FinBERT sentiment scores of news headlines.
 Archived here as a post-mortem — the system didn't work, and the specific reasons were
 worth writing down. Lessons directly informed the risk engine in
-[QuantWorkstation](https://github.com/Burkswill2/QuantWorkstation).
+[QuantWorkstation](https://github.com/william-burks/QuantWorkstation).
 
 ## What it did
 
@@ -101,7 +101,7 @@ QuantWorkstation's IS/OOS evidence harness.
 
 ## Superseded by
 
-[QuantWorkstation](https://github.com/Burkswill2/QuantWorkstation) —
+[QuantWorkstation](https://github.com/william-burks/QuantWorkstation) —
 research harness with IS/OOS evidence gating, a risk engine with per-trade and
 portfolio-level caps, and no promotion to live without walk-forward validation.
 The killed-champion story in that repo's history is an outcome of applying
